@@ -1,0 +1,28 @@
+import '@testing-library/cypress/add-commands';
+
+const wait = 6000;
+
+function filterProgramsByLevel (degree, name){
+  cy.findAllByRole('combobox').first().click({ force: true });
+  cy.findAllByRole('option', RegExp(degree)).first().click();
+  cy.findAllByRole('combobox').eq(1).click({ force: true });
+  cy.findAllByRole('option', RegExp(name)).eq(1).click();
+};
+
+function openCheckEligibilityModal() {
+  cy.findAllByText(/check eligibility/i, { timeout: wait }).first().click({ force: true });
+};
+
+function closeCheckEligibilityModal () {
+  cy.findByRole('button', { name: 'close' }).click();
+  cy.findByRole('heading', { name: /check student eligibility/i }).should('not.exist');
+};
+
+const _ = {
+  filterProgramsByLevel,
+  openCheckEligibilityModal,
+  closeCheckEligibilityModal
+};
+
+export default _;
+
