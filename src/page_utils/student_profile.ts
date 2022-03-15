@@ -3,7 +3,7 @@ import 'cypress-file-upload';
 
 const wait = 3000
 
-function findAttendedSchools () {
+const findAttendedSchools = () => {
   cy.get('#EducationHistoryPage')
     .its('length')
     .then(() => {
@@ -13,7 +13,7 @@ function findAttendedSchools () {
     });
 };
 
-function editStudentAddressDetails (studentData) {
+const editStudentAddressDetails = (studentData) => {
   cy.findAllByRole('textbox', { name: /address/i, timeout: wait })
     .first()
     .clear()

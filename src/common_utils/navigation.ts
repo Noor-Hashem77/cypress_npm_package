@@ -10,7 +10,7 @@ const wait = 10000;
 /**
  * Menu availability check with page load
  */
-function menuCheck (menuTestData) {
+const menuCheck = (menuTestData) => {
   menuTestData.forEach((el: MenuTestData) => {
     cy.findAllByText(el.menuName)
       .first()
@@ -26,7 +26,7 @@ function menuCheck (menuTestData) {
 /**
  * Simple menu availability check
  */
-function simpleMenuCheck (menuItems) {
+const simpleMenuCheck = (menuItems) => {
   menuItems.forEach((el: String) => {
     cy.findAllByText(el).first().should('exist');
   });
@@ -35,7 +35,7 @@ function simpleMenuCheck (menuItems) {
 /**
  * Clicks on one menu option and verifies it
  */
-function clickLeftMenuOption (menuName, url) {
+const clickLeftMenuOption = (menuName, url) => {
   cy.findAllByText(menuName)
     .first()
     .should('exist')
@@ -49,7 +49,7 @@ function clickLeftMenuOption (menuName, url) {
 /**
  * Clicks on the first link from any given grid or list
  */
-function navigateToFirstLinkFromList (linkName){
+const navigateToFirstLinkFromList = (linkName) => {
   cy.findAllByRole('link', { name: linkName }).first().then(link => {
     cy.request(link.prop('href')).its('status').should('eq', 200).visit(link.prop('href'));
   });

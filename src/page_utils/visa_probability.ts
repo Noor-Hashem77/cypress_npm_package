@@ -11,15 +11,14 @@ export interface VisaProbabilityFormData {
  * Fills the visa probability form with the provided data
  * @param visaProbabilityFormData of type VisaProbabilityFormData
  */
-function fillVisaProbabilityForm
-  ({
+const fillVisaProbabilityForm = ({
     countryOfCitizenship,
     countryOfResidence,
     age,
     gender,
     levelOfStudy,
     province,
-  }: VisaProbabilityFormData) {
+  }: VisaProbabilityFormData) => {
     cy.findByRole('textbox', { name: /Country of Citizenship/i })
       .clear()
       .type(countryOfCitizenship)

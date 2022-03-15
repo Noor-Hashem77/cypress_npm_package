@@ -19,7 +19,7 @@ import students from './src/page_utils/students';
 import visa_probability from './src/page_utils/visa_probability';
 
 const initialize = () => {
-  Cypress.Commands.add('uiLogin', authenticate.uiLogin);
+  Cypress.Commands.add('uiLogin7', authenticate.uiLogin7);
   Cypress.Commands.add('uiLogout', authenticate.uiLogout);
 
   Cypress.Commands.add('verifyUrl', customCommands.verifyUrl);

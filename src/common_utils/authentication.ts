@@ -10,8 +10,8 @@ const wait = isLocal ? 15000 : 4000;
  * @param path path where login page is found. Defaults to '/'
  */
  const { baseUrl } = Cypress.config();
- function uiLogin(username, password, path = '/', rememberMe = false) {
-  console.log('!THIS IS FROM THE PACKAGE inside a folder, Noor!!!')
+ const uiLogin7 = (username, password, path = '/', rememberMe = false) => {
+  console.log('THIS IS FROM CYPRESS PACKAGE!')
   const log = Cypress.log({
     name: "uiLogin",
     displayName: "LOGIN",
@@ -30,7 +30,7 @@ const wait = isLocal ? 15000 : 4000;
   log.end(); 
 };
 
-function uiLogout() {
+const uiLogout = () => {
   console.log("this is from the package!")
   const log = Cypress.log({
     name: "uiLogout",
@@ -44,13 +44,8 @@ function uiLogout() {
   log.end();
 };
 
-// module.exports = ({
-//   NoorLogin,
-//   NoorLogout
-// });
-
 const _ = {
-  uiLogin,
+  uiLogin7,
   uiLogout
 }
 

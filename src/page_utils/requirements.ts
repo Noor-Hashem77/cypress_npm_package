@@ -7,7 +7,7 @@ const wait = 5000;
  * @param option String option to be clicked
  * @param {appId} application ID if the view application option is clicked
  */
-function closeRequirementDetailsModal () {
+const closeRequirementDetailsModal = () => {
   cy.get('[data-testid=modal-close-button] > .fa').click();
   cy.get('[data-testid=modal-close-button] > .fa').should('not.exist');
 };
@@ -16,7 +16,7 @@ function closeRequirementDetailsModal () {
  * Filter the Requirements using requirement name
  * @param requirementName name of the requirement to search for
  */
-function filterRequirements (requirementName) {
+const filterRequirements = (requirementName) => {
   cy.findByPlaceholderText(/requirement id/i).type(requirementName);
   cy.findByRole('button', { name: /filter/i }).click();
 };
@@ -25,7 +25,7 @@ function filterRequirements (requirementName) {
  * Open Requirement Details modal
  * @param requirementName name of the requirement to view details for
  */
-function openRequirementDetailsModal (requirementName) {
+const openRequirementDetailsModal = (requirementName) => {
   cy.findAllByText(RegExp(requirementName, 'i'), { timeout: wait }).first().click({ force: true });
   cy.findAllByText(/applicant requirements/i, { timeout: wait }).first().should('be.visible');
   cy.findAllByRole('button', { name: /next/i }).first().should('be.visible');

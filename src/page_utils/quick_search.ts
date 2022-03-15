@@ -6,7 +6,7 @@ const wait = 10000;
  * Clears the existing shool and program filters by pressing
  * on the CLEAR FILTERS button at the bottom.
  */
-function clearFilters (){
+const clearFilters = () => {
   cy.scrollTo('bottom');
   cy.findByText(/CLEAR FILTERS/i, { timeout: wait }).click();
   cy.scrollTo('top');
@@ -18,7 +18,7 @@ function clearFilters (){
  * @param index which of the 2 Apply Filter Buttons to be clicked.
  *  0 is the first and 1 is the second
  */
-function applyFilters (index) {
+const applyFilters = (index) => {
   cy.scrollTo('bottom');
   cy.findAllByText(/APPLY FILTERS/i)
     .eq(index)
@@ -30,7 +30,7 @@ function applyFilters (index) {
  * Gets the number of programs in the search results
  * @returns number of programs in the result
  */
-function getProgramCount () {
+const getProgramCount = () => {
   // this function is working only for Student, because button Apply is available only for this user type
   cy.findAllByText('Apply', { timeout: wait })
     .should("be.visible");
@@ -44,7 +44,7 @@ function getProgramCount () {
  * Gets the number of schools in the search results
  * @returns number of schools in the result
  */
-function getSchoolCount () {
+const getSchoolCount = () => {
   cy.findByRole('tab', { name: /Schools(?:\s\(\d+\+?\))?/i })
     .should('be.visible')
     .invoke('text')
@@ -55,7 +55,7 @@ function getSchoolCount () {
  * Search by school name or location
  * @param schoolOrLocation School name or location
  */
-function searchBySchoolName (schoolOrLocation) {
+const searchBySchoolName = (schoolOrLocation) => {
   cy.findByPlaceholderText(/school name or location/i).type(schoolOrLocation);
   cy.findByRole('option', { name: schoolOrLocation, timeout: wait }).first().click();
   cy.clickSearch();
@@ -65,7 +65,7 @@ function searchBySchoolName (schoolOrLocation) {
  * Search by Program Name
  * @param programName Program name
  */
-function searchByProgramName (programName) {
+const searchByProgramName = (programName) => {
   cy.findByPlaceholderText(/What would you like to study/i).type(programName);
   cy.findByRole('option', { name: programName, timeout: wait }).first().click();
   cy.clickSearch();
@@ -76,7 +76,7 @@ function searchByProgramName (programName) {
  * @param programName Program name
  * @param schoolName the name of the school or the location
  */
-function searchByProgramAndSchool (programName, schoolName) {
+const searchByProgramAndSchool = (programName, schoolName) => {
   cy.findAllByRole('searchbox', { timeout: wait }).first().type(programName);
   cy.findAllByRole('searchbox').eq(1).type(schoolName);
   cy.clickSearch();
@@ -86,7 +86,7 @@ function searchByProgramAndSchool (programName, schoolName) {
  * Land on the school page after searching
  * @param schoolName the name of school
  */
-function viewSchoolBySchoolName (schoolName) {
+const viewSchoolBySchoolName = (schoolName) => {
   cy.searchBySchoolName(schoolName);
   // Click on Search results
   cy.clickElement('link', new RegExp(schoolName));
@@ -95,7 +95,7 @@ function viewSchoolBySchoolName (schoolName) {
 /**
  * Clicks the search button
  */
-function clickSearch () {
+const clickSearch = () => {
   cy.waitForAPIResponse('POST', /\/program_search.json/g);
   cy.findByRole('button', { name: /^Search$/, timeout: wait }).click();
   cy.findByRole('tab', { name: /Programs(?:\s\(\d+\+?\))?/i, timeout: wait }).should('be.visible');
@@ -104,7 +104,7 @@ function clickSearch () {
 /**
  * Chooses a country from dropdown under the School Filters
  */
-function chooseCountryUnderSchoolFilters (countryName) {
+const chooseCountryUnderSchoolFilters = (countryName) => {
   cy.findAllByText(/Select.../i).eq(1).click({ force:true })
   cy.findAllByText(RegExp(countryName))
     .first()
@@ -114,7 +114,7 @@ function chooseCountryUnderSchoolFilters (countryName) {
 /**
  * Applies the filter and verifies that the search has returned schools and programs
  */
-function applySchoolLocationFilter () {
+const applySchoolLocationFilter = () => {
   cy.chooseCountryUnderSchoolFilters('Canada');
   cy.applyFilters(1);
   cy.findAllByText(/apply/i, { timeout: wait }).eq(2).should('be.visible');
@@ -129,7 +129,7 @@ function applySchoolLocationFilter () {
 /**
  * Enter English score on Eligibility panel
  */
-function enterEnglishScore (examType, score) {
+const enterEnglishScore = (examType, score) => {
   cy.findByText(/ielts/i)
     .type('{backspace}');
   cy.findByText(examType)
@@ -144,7 +144,7 @@ function enterEnglishScore (examType, score) {
 /**
  * Enter grading scheme on Eligibility panel
  */
-function enterGradingScheme (gradingSchemeValue) {
+const enterGradingScheme = (gradingSchemeValue) => {
   // cy.get(':nth-child(6) > .field-dirty > .css-2b097c-container > .react-select__control > .react-select__value-container')
   cy.findAllByText(/Select.../i).eq(2)
     .click();
@@ -156,7 +156,7 @@ function enterGradingScheme (gradingSchemeValue) {
 /**
  * Enter education level on Eligibility panel
  */
-function enterEducationLevel (educationLevelValue) {
+const enterEducationLevel = (educationLevelValue) => {
   // cy.get('.css-leitz7 > :nth-child(5) > .css-24i1hw > .css-2b097c-container > .react-select__control')
   cy.findByText(/3-Year Bachelors Degree/i)
     .click()
@@ -169,7 +169,7 @@ function enterEducationLevel (educationLevelValue) {
 /**
  * Enter grading average on Eligibility panel
  */
-function enterGradingAverage (gradingAverageValue) {
+const enterGradingAverage = (gradingAverageValue) => {
   cy.findAllByRole('spinbutton')
     .first()
     .type('{backspace}')
@@ -178,7 +178,7 @@ function enterGradingAverage (gradingAverageValue) {
 /**
  * Check student eligibility for a specific school and program
  */
-function checkStudentEligibilityForSchoolAndProgram (student, location, programName) {
+const checkStudentEligibilityForSchoolAndProgram = (student, location, programName) => {
   cy.searchByProgramAndSchool(programName, location);
   cy.wait('@apiResponse');
   cy.findAllByText(/select student/i, { timeout: wait })
@@ -196,7 +196,7 @@ function checkStudentEligibilityForSchoolAndProgram (student, location, programN
 /**
  * Apply for a program for as RP or as Student
  */
-function applyForAProgram (userType) {
+const applyForAProgram = (userType) => {
   // increasing the timeout for quick search page until the performance improves
   cy.findByText(/eligibility/i, { timeout: 25000 }).should('exist');
   cy.findAllByText('Apply', { timeout: wait }).eq(6).click({ force:true });
@@ -210,7 +210,7 @@ function applyForAProgram (userType) {
  * Make sure you  don't use the full matching String since it will have difficulty choosing the value from Dropdown
  * If you are interested to remove existing values, make sure you pass TRUE for removeExistingVisaTypes value
  */
-function chooseVisaTypeFromDropDown  (visaTypeRegExp, removeExitingVisaTypes){
+const chooseVisaTypeFromDropDown = (visaTypeRegExp, removeExitingVisaTypes) => {
   if (removeExitingVisaTypes) {
     cy.get('.css-2b097c-container > .react-select__control > .react-select__indicators > .react-select__clear-indicator > .css-19bqh2r').then(($button) => {
       if ($button.length) {

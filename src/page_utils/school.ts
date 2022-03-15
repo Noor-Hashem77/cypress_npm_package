@@ -5,7 +5,7 @@ const wait = 15000;
 /**
  * Click on the filter by given placeholder
  */
-function applyProgramFilter (filterPlaceHolder){
+const applyProgramFilter = (filterPlaceHolder) => {
   cy.intercept({
     method: 'GET',
     url: `/api/schools/2/programs?filter%5Bdiscipline_ids%5D=&filter%5Blevel%5D=&filter%5Bprogram_name%5D=&filter%5Bpublication_status%5D=all&include=program_intakes&page%5Bnumber%5D=1&parent=%5Bobject%20Object%5D&sort=-tuition&stats%5Btotal%5D=count`
@@ -22,7 +22,7 @@ function applyProgramFilter (filterPlaceHolder){
 /**
  * Clears the existing filters.
  */
-function clearFilters (){
+const clearFilters = () => {
   cy.findByText(/Clear Filters/g, { timeout: wait }).click();
 };
 
@@ -30,7 +30,7 @@ function clearFilters (){
  * Clicks on specified top menu link.
  * @param menuItem the given menu item
  */
-function clickOnHeaderMenu (menuItem) {
+const clickOnHeaderMenu = (menuItem) => {
   cy.get("div[class='not_sticky']")
     .children()
     .children()
@@ -43,7 +43,7 @@ function clickOnHeaderMenu (menuItem) {
  * Clicks program anme and verifies header.
  * @param menuItem the given menu item
  */
-function clickProgramName (programName){
+const clickProgramName = (programName) => {
   cy.get('div.card-header a', { timeout: wait }).eq(0).invoke('removeAttr', 'target').click();
   cy.findAllByRole('heading').eq(0).should('contain', programName).and('be.visible');
 };

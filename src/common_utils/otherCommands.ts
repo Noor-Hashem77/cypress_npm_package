@@ -39,7 +39,7 @@ export interface FileProcessingOptions {
  * Verifies if the URL passed matches the URL of the current page
  * @param path: regular expression containing the pattern to be matched
  */
-function verifyUrl (path) {
+const verifyUrl = (path) => {
   const log = Cypress.log({
     name: "Verify Url",
     displayName: "url",
@@ -54,7 +54,7 @@ function verifyUrl (path) {
  * Verifies the pop up text on top right
  * @param toastText: text to be verified on the pop up message
  */
-function verifyToastMessage (toastText) {
+const verifyToastMessage = (toastText) => {
   cy.get('.toast-message', { timeout: wait }).should('exist').and('contain', toastText);
 };
 
@@ -62,7 +62,7 @@ function verifyToastMessage (toastText) {
  * Click the link specified by the text
  * @param linkText: Link name
  */
-function clickElement (elName, elText) {
+const clickElement = (elName, elText) => {
   cy.findByRole(elName, { name: elText })
     .first()
     .should('be.visible')
@@ -73,7 +73,7 @@ function clickElement (elName, elText) {
 /**
  * wait for spinner to disappear in monolith grid
  */
-function waitForElementToBeRemoved (locator) {
+const waitForElementToBeRemoved = (locator) => {
   cy.get(locator, { timeout: 20000 }).should('not.exist');
 };
 
@@ -81,7 +81,7 @@ function waitForElementToBeRemoved (locator) {
  * verifies that button is visible and then clicks on it
  * @param buttonText: Text of the button
  */
-function clickButton (buttonText) {
+const clickButton = (buttonText) => {
   cy.findByRole('button', { name: buttonText, timeout: wait }).first().should('be.visible').click();
 };
 
@@ -89,7 +89,7 @@ function clickButton (buttonText) {
  * Check if the locator exists in the DOM
  * @param locator: string locator to be verified
  */
-function locatorExists (locator) {
+const locatorExists = (locator) => {
   cy.get('body').then($body => {
     if ($body.find(locator).length) {
       return true;
@@ -104,7 +104,7 @@ function locatorExists (locator) {
  * @param placeholder identifier of the field
  * @param value new value of the field
  */
-function editTextFields (placeholder, value, header?){
+const editTextFields = (placeholder, value, header?) => {
   if (header != null) {
     cy.findByRole('heading', { name: header }).should('exist');
   }
@@ -116,7 +116,7 @@ function editTextFields (placeholder, value, header?){
  * @param header heading of the field to be edited
  * @param placeholder identifier of the field
  */
-function editDropdown (placeholder, header?) {
+const editDropdown = (placeholder, header?) => {
   if (header != null) {
     cy.findByRole('heading', { name: header }).should('exist');
   }
@@ -127,7 +127,7 @@ function editDropdown (placeholder, header?) {
 /**
  * Wait for SPA Loading... in grids disappear
  */
-function waitForLoadingToDisappear (){
+const waitForLoadingToDisappear = () => {
   cy.findByText('Loading...', { timeout: wait })
     .should('not.exist');
 };
@@ -139,7 +139,7 @@ function waitForLoadingToDisappear (){
  * @param placeholder identifier of the field
  * @param value new value of the field
  */
-function searchUsingTopNavigation (searchTerm, searchPlaceholder, searchLink) {
+const searchUsingTopNavigation = (searchTerm, searchPlaceholder, searchLink) => {
   cy.findAllByPlaceholderText(searchPlaceholder, { timeout: wait }).should('exist');
   cy.findAllByPlaceholderText(searchPlaceholder).type(searchTerm);
   cy.findAllByRole('link', { name: searchLink }).first().should('exist');
@@ -159,7 +159,7 @@ function searchUsingTopNavigation (searchTerm, searchPlaceholder, searchLink) {
 //  * @param filePath the path at which the file to be uploaded is present
 //  * @param uploadLocator locator which open the explorer
 //  */
-function uploadFile (uploadLocator, filePath, index, fileName){
+const uploadFile = (uploadLocator, filePath, index, fileName) => {
   cy.get(uploadLocator).get("input[type='file']").eq(index).attachFile(filePath);
   cy.findAllByText(fileName, { timeout: wait }).should('exist');
 };
@@ -167,12 +167,12 @@ function uploadFile (uploadLocator, filePath, index, fileName){
 /**
  * Waits for an API response to load before proceeding.
  */
-function waitForAPIResponse (method, route, alias = 'apiResponse') {
+const waitForAPIResponse = (method, route, alias = 'apiResponse') =>{
   cy.server();
   cy.route({ method, url: route }).as(alias);
 };
 
-function findCompleteProfileId (hasApplication = 0) {
+const findCompleteProfileId = (hasApplication = 0) => {
   cy.request(
     `${baseUrl}/api/v2/students?include=agent,agent.agent_information,agent.agent_information.agent_manager.user,student_information.sales_representative.user&sort=-id&filter[applications]=${hasApplication}`
   ).then(response => {
@@ -182,7 +182,7 @@ function findCompleteProfileId (hasApplication = 0) {
   });
 };
 
-function removeStudentDocument (responseBody) {
+const removeStudentDocument = (responseBody) => {
   cy.request(
     `${baseUrl}/api/students/${responseBody.profile.student_information_id}/student_profile_documents?include=student_document.student_attachments%2Crequirement_template`
   ).then(nestedResponse => {
@@ -204,8 +204,7 @@ function removeStudentDocument (responseBody) {
   });
 };
 
-function removeApplicationAttachment
-  (attachmentId, requirementId, xcsrfHeader) {
+const removeApplicationAttachment = (attachmentId, requirementId, xcsrfHeader) => {
     cy.request({
       method: 'DELETE',
       url: `${baseUrl}/api/application_requirements/${requirementId}/requirement_attachments/${attachmentId}?method=destroy&type=requirement_attachments`,
@@ -220,13 +219,12 @@ function removeApplicationAttachment
 /**
  * Checks that bundle sizes are less than certain thresholds
  */
-function checkBundleSizes
-  (thresholds: {
+const checkBundleSizes = (thresholds: {
     mainBundleSize: number;
     mainBundleSizeAfterCompression: number;
     sumOfBundles: number;
     sumOfBundlesAfterCompression: number;
-  }) {
+  }) => {
     cy.window().then(win => {
       const entries = win.performance.getEntriesByType('resource');
 
@@ -263,13 +261,13 @@ function checkBundleSizes
       );
     });};
 
-function disableBrowserPrompts () {
+const disableBrowserPrompts = () => {
   cy.window().then(win => {
     cy.stub(win, 'prompt').returns('DISABLED WINDOW PROMPT');
   });
 };
 
-function closeRPWelcomeModal (){
+const closeRPWelcomeModal = () => {
   cy.get('body').then((body) => {
     if (body.find('#welcomeLeadManagement').length > 0) {
       cy.findByRole('button', { name: /close/i })
@@ -279,7 +277,7 @@ function closeRPWelcomeModal (){
   });
 };
 
-function rpCreateStudent (email: string) {
+const rpCreateStudent = (email: string) => {
   cy.request(`${baseUrl}api/v2/me?include=agent_information`).then((meResponse) => {
     const rpId: string = meResponse.body.included.find((included: any) => included.type === 'agent_information').id;
     cy.request({
@@ -312,12 +310,13 @@ function rpCreateStudent (email: string) {
   });
 };
 
-function setupEventTrackerSpy () 
-  {cy.intercept('POST', 'https://api.perfalytics.com/track').as('trackEvent')}
+const setupEventTrackerSpy = () => {
+  cy.intercept('POST', 'https://api.perfalytics.com/track').as('trackEvent')
+}
 
-function assertEventTrackCall (expectedEvent: string = '$web_event')
-  {cy.wait('@trackEvent')
-    .then((interceptObj) => expect(interceptObj.request?.body?.event).to.equal(expectedEvent))
+const assertEventTrackCall = (expectedEvent: string = '$web_event') =>{
+  cy.wait('@trackEvent')
+  .then((interceptObj) => expect(interceptObj.request?.body?.event).to.equal(expectedEvent))
 }
 
 const _ = {

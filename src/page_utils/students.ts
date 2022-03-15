@@ -23,7 +23,7 @@ const randomNum: number = Math.floor(Math.random() * 6);
  * @param name String option to be clicked
  * @param {id} student ID if the edit profile option is clicked
  */
-function viewStudentOptions (name, id?, timeout = wait) {
+const viewStudentOptions = (name, id?, timeout = wait) => {
   cy.findAllByRole('button', { name: new RegExp(`more-actions-${id || ''}`, 'i'), timeout })
     .first()
     .should('be.visible')
@@ -45,7 +45,7 @@ function viewStudentOptions (name, id?, timeout = wait) {
  * Find number of Complete profile on first page
  * @returns true if complete profiles exist
  */
-function findCompleteProfiles (){
+const findCompleteProfiles = () => {
   cy.findAllByRole('gridcell', { name: /Complete/g }).then(profileCount => {
     if (Cypress.$(profileCount).length) {
       return true;
@@ -54,11 +54,11 @@ function findCompleteProfiles (){
   });
 };
 
-function advisorSelectStudentFromList (option) {
+const advisorSelectStudentFromList = (option) => {
   cy.viewStudentOptions(option);
 };
 
-function rpSearchForStudentFromList (option, value) {
+const rpSearchForStudentFromList = (option, value) => {
   cy.findAllByRole('gridcell', { timeout: wait }).first().should('be.visible');
   cy.findByRole('textbox', { name: option, timeout: wait })
     .should('be.visible')
@@ -70,7 +70,7 @@ function rpSearchForStudentFromList (option, value) {
  * Save Edited details
  * @returns true if complete profiles exist
  */
-function saveDetails () {
+const saveDetails = () => {
   cy.findAllByRole('button', { name: /Save/g })
     .filter(':visible')
     .click({ timeout: wait, multiple: true });
@@ -80,7 +80,7 @@ function saveDetails () {
 /**
  * Clicks on Reset Filters
  */
-function resetFilters () {
+const resetFilters = () => {
   cy.findAllByRole('button', { name: /Reset Filters/g })
     .filter(':visible')
     .click({ timeout: wait });
@@ -89,7 +89,7 @@ function resetFilters () {
 /**
  * Edit the Student Personal Information
  */
-function editPersonalInformation () {
+const editPersonalInformation = () => {
   cy.findByRole('textbox', { name: /First Name/i }).type(firstNameArr[randomNum]);
   cy.findByRole('textbox', { name: /Middle Name/i }).type(middleNameArr[randomNum]);
   cy.findByRole('textbox', { name: /Last Name/i }).type(lastNameArr[randomNum]);
@@ -101,7 +101,7 @@ function editPersonalInformation () {
 /**
  * Edit the Student Address Detail
  */
-function editAddressDetail () {
+const editAddressDetail = () => {
   cy.findByRole('textbox', { name: /City\/Town/i }).type(RandomCity());
   cy.findByRole('textbox', { name: /Postal\/Zip Code/i }).type(`${Math.floor(Math.random() * 90000)}${10000}`);
   cy.editTextFields(/\+1 201-555-0123/g, '+1 437-000-1122');
@@ -111,14 +111,14 @@ function editAddressDetail () {
 /**
  * Edit the Student Test Scores
  */
-function editTestScores () {
+const editTestScores = () => {
   cy.findByRole('spinbutton', { name: /Enter Exact Scores/i }).clear().type(`${Math.floor(Math.random() * 3 + 6)}`);
   cy.editTextFields(/Reading/i, `${Math.floor(Math.random() * 3 + 6)}`);
   cy.editTextFields(/Writing/i, `${Math.floor(Math.random() * 3 + 6)}`);
   cy.editTextFields(/Speaking/i, `${Math.floor(Math.random() * 3 + 6)}`);
 };
 
-function editDate () {
+const editDate = () => {
   cy.findAllByRole('textbox', { name: /date of exam/i })
     .first()
     .should('have.attr', 'placeholder', 'yyyy-mm-dd')

@@ -7,11 +7,10 @@ export interface StudentRegistrationForm {
  * Fills the student modal with the provided data
  * @param studentData of type StudentRegistrationForm
  */
-function fillStudentRegistration
-({
+const fillStudentRegistration = ({
   email,
   password,
-}: StudentRegistrationForm) {
+}: StudentRegistrationForm) => {
   if (email) {
     cy.findByPlaceholderText(/Email/i)
       .clear()

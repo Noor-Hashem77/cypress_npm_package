@@ -11,14 +11,14 @@ export interface DepositCreditParams {
 
 const wait = 9000;
 
-function addPayment(depositType){
+const addPayment = (depositType) => {
   cy.waitForLoadingToDisappear();
   cy.get('div.card-body .fa.fa-plus', { timeout: wait }).click();
   cy.findByText(depositType, { timeout: wait }).click();
 };
 
 // To add the Credit from 'Deposit' tab on payment History page
-function makeTransaction ({ transactionType, amount, currency, comment, title }){
+const makeTransaction = ({ transactionType, amount, currency, comment, title }) => {
   cy.findByText('Select...').click();
   cy.findByRole('option', { name: transactionType }).click();
   cy.editTextFields(/amount/i, amount);
@@ -34,7 +34,7 @@ function makeTransaction ({ transactionType, amount, currency, comment, title })
 };
 
 // To choose the currency type CAD, USD, AUD or GBP
-function chooseCurrency (currency){
+const chooseCurrency = (currency) => {
   if (currency === 'USD') {
     cy.get('div.currency-selector-wrapper > div:nth-of-type(1)').click();
   } else if (currency === 'CAD') {
@@ -46,7 +46,7 @@ function chooseCurrency (currency){
   }
 };
 
-function verifyImportCenterBtn (buttonName,popUpWindowText){
+const verifyImportCenterBtn = (buttonName,popUpWindowText) => {
   cy.clickLeftMenuOption('Import Center', /import_center/g);
   cy.findAllByRole('button', { name: buttonName })
     .first()
@@ -58,7 +58,7 @@ function verifyImportCenterBtn (buttonName,popUpWindowText){
   });
 };
 
-function testDetails (testComment) {
+const testDetails = (testComment) => {
   cy.get('div.card-body .fa.fa-plus', { timeout: wait }).should('be.visible');
   cy.waitForLoadingToDisappear();
   cy.findAllByRole('button', { name: /VIEW DETAILS/i })
@@ -70,7 +70,7 @@ function testDetails (testComment) {
   cy.get('div > span.fa.fa-times').click();
 };
 
-function deductAmount (typeOfCharge,transactionType, amount, currency){
+const deductAmount = (typeOfCharge,transactionType, amount, currency) => {
   const now = new Date().getTime();
   const title = `Testing_${transactionType}+${now}`;
   cy.addPayment(typeOfCharge);
@@ -83,7 +83,7 @@ function deductAmount (typeOfCharge,transactionType, amount, currency){
 };
 
 // To add the Credit from 'Deposit' tab on payment History page
-function addDetails ({ amount, currency, comment, title }) {
+const addDetails = ({ amount, currency, comment, title }) => {
   cy.editTextFields(/amount/i, amount);
   if (comment) {
     cy.editTextFields(/comment/i, comment);
@@ -96,14 +96,14 @@ function addDetails ({ amount, currency, comment, title }) {
   cy.waitForLoadingToDisappear();
 };
 
-function selectDepositType (accountType, transactionType) {
+const selectDepositType = (accountType, transactionType) => {
   cy.findByText('Select Account...').click();
   cy.findByRole('option', { name: accountType }).click();
   cy.findByText('Select Transaction...').click();
   cy.findByRole('option', { name: transactionType }).click();
 };
 
-function depositAmount (typeOfCharge, accountType, transactionType, amount, currency) {
+const depositAmount = (typeOfCharge, accountType, transactionType, amount, currency) => {
   const now = new Date().getTime();
   const title = `Testing_${transactionType}+${now}`;
   cy.addPayment(typeOfCharge);

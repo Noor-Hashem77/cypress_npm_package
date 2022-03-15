@@ -11,7 +11,7 @@ const filePath = 'files/Test_File_Add_Admin_Comment.pdf';
 /**
  * Deletes the most recent note
  */
-function deleteNote () {
+const deleteNote = () => {
   cy.get('span.fa.fa-trash').eq(0).click({ timeout: wait });
   // Wait is needed here to avoid race condition for clicking the DELETE confirmation button
   // eslint-disable-next-line cypress/no-unnecessary-waiting
@@ -25,7 +25,7 @@ function deleteNote () {
 /**
  * Adds a note, the associated file and then verify the note
  */
-function addNote() {
+const addNote = () => {
   cy.get('#NotesListingContainer').should('be.visible');
   cy.findByPlaceholderText(/Enter title here/i).click({ force: true }).type('Lorem Ipsum');
   cy.get('div.ql-editor.ql-blank').type(commentBody);
@@ -38,7 +38,7 @@ function addNote() {
 /**
  * Checks if a note already exists
  */
-function clickAddNoteLink () {
+const clickAddNoteLink = () => {
   cy.get('#NotesListingContainer').should('be.visible');
   cy.locatorExists('div.note-body').then(present => {
     if (present) {

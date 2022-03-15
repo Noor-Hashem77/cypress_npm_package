@@ -19,8 +19,7 @@ export interface StudentData {
  * Fills the student modal with the provided data
  * @param studentData of type StudentData
  */
-function fillStudentModal
-  ({
+const fillStudentModal = ({
     email,
     phone,
     firstName,
@@ -35,7 +34,7 @@ function fillStudentModal
     countryOfInterest,
     serviceOfInterest,
     didStudentConsent,
-  }: StudentData) {
+  }: StudentData) => {
     cy.findByLabelText('Email').clear().type(email);
     if (phone) {
       cy.findByRole('textbox', { name: /Phone Number/i })

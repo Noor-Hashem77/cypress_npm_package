@@ -4,12 +4,12 @@ const isLocal = Cypress.env('environment') === 'local';
 const wait = isLocal ? 30000 : 18000;
 const OPTIONS = { timeout: wait };
 
-function navigateToImportantUpdates(){
+const navigateToImportantUpdates = () => {
   cy.get('[data-testid=header-important-updates-dot]').click({ timeout: wait });
   cy.findByText(/notes/i, OPTIONS).should('exist');
 };
 
-function viewNotesFromImportantUpdates(){
+const viewNotesFromImportantUpdates = () => {
   cy.findByText(/notes/i).click();
   cy.findByRole('button', { ...OPTIONS, name: /all/i });
   cy.findAllByRole('link', { ...OPTIONS, name: /view/i })
@@ -20,7 +20,7 @@ function viewNotesFromImportantUpdates(){
     });
 };
 
-function replyToNote() {
+const replyToNote = () => {
   cy.findAllByRole('button', { ...OPTIONS, name: /^reply note$/i }).first().click();
   cy.findByText((/create from template/i)).should('exist');
   cy.findAllByRole('button', { name: /create/i }).first().should('exist');

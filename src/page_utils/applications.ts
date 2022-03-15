@@ -7,7 +7,7 @@ const wait = 12000;
  * @param option String option to be clicked
  * @param {appId} application ID if the view application option is clicked
  */
-function viewApplicationOptions(option, id?) {
+const viewApplicationOptions = (option, id?) => {
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(2000); // wait is necessary here because sometimes the page loads twice
   cy.findAllByRole('button', { name: new RegExp(`more-actions-${id || ''}`, 'i'), timeout: wait })
@@ -33,7 +33,7 @@ function viewApplicationOptions(option, id?) {
  * Filter the application using application id
  * @param appId id of the app to be filtered
  */
-function filterAppId(appId) {
+const filterAppId = (appId) => {
   cy.get('input.MuiInputBase-input.MuiOutlinedInput-input').eq(2).type(appId);
   cy.findByRole('button', { name: 'Apply Filters' }).click({ timeout: wait });
   cy.findAllByRole('link', { name: /^[0-9]+$/i, timeout: wait })
@@ -45,11 +45,11 @@ function filterAppId(appId) {
  * Gets the number of schools in the search results
  * @returns number of schools in the result
  */
-function clickOnAppTabs(tabName){
+const clickOnAppTabs = (tabName) => {
   cy.findByText(tabName).click({ timeout: wait });
 };
 
-function applyFiltersOnApplicationsPage(filterValue, index) {
+const applyFiltersOnApplicationsPage = (filterValue, index) => {
   cy.findAllByRole('gridcell', { timeout: wait }).first().should('be.visible');
   cy.findAllByRole('textbox', { timeout: wait })
     .eq(index)
@@ -59,11 +59,11 @@ function applyFiltersOnApplicationsPage(filterValue, index) {
   cy.findAllByText(filterValue, { timeout: wait }).first().should('exist');
 };
 
-function navigateToApplicantRequirements(){
+const navigateToApplicantRequirements = () => {
   cy.findByText(/applicant requirements/i, { timeout: wait }).click();
 };
 
-function viewOneRandomApplication () {
+const viewOneRandomApplication = () => {
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(5000); // wait is necessary here because sometimes the page loads twice
   cy.findAllByRole('button', { name: /more-actions-/i, timeout: wait })
@@ -82,7 +82,7 @@ function viewOneRandomApplication () {
   cy.chooseApplicationFromAppliedList();
 };
 
-function chooseApplicationFromAppliedList(){
+const chooseApplicationFromAppliedList = () => {
   cy.findAllByRole('button', { name: /view/i, timeout: wait })
     .eq(0)
     .closest('a')
@@ -92,7 +92,7 @@ function chooseApplicationFromAppliedList(){
     });
 };
 
-function openQuestionRequirementModal(){
+const openQuestionRequirementModal = () => {
   cy.findAllByRole('button', {
     name: /question/i,
     timeout: wait,
@@ -104,38 +104,38 @@ function openQuestionRequirementModal(){
   cy.get('[data-testid="modal-close-button"]').click();
 };
 
-function chooseApplicantRequirementTab(){
+const chooseApplicantRequirementTab = () => {
   cy.findByText(/applicant requirements/i).click();
   cy.get('.fulfill-requirement-button', { timeout: wait }).should('exist');
 };
 
-function chooseStudentRecordsTab() {
+const chooseStudentRecordsTab = () => {
   cy.findByText(/student records/i).click();
   cy.url().should('include', 'student-records');
 };
 
-function chooseNotesTab() {
+const chooseNotesTab = () => {
   cy.findByText(/notes/i, { timeout: wait }).click();
   cy.url().should('include', 'tab=notes');
 };
 
-function openRequirementCreationModal() {
+const openRequirementCreationModal = () => {
   cy.findByText(/create requirement/i).click();
   cy.findByText(/requirement details/i).should('exist');
 };
 
-function exitRequirementCreationModal(){
+const exitRequirementCreationModal = () => {
   cy
   .findByRole('button', { name: /close/i })
   .click();
 };
 
-function openRequirementComparisonModal() {
+const openRequirementComparisonModal = () => {
   cy.findAllByText(/compare/i).first().click();
   cy.findByText(/requirement comparison/i).should('exist');
 };
 
-function addNewRequirementToApplication(stage, category, requirementId) {
+const addNewRequirementToApplication = (stage, category, requirementId) => {
   // open the modal
   cy.findByRole('button', { name: /add requirements/i }).click();
   cy.findByText(/select requirement/i).should('exist');
@@ -160,19 +160,19 @@ function addNewRequirementToApplication(stage, category, requirementId) {
   cy.findByRole('button', { name: /confirm/i }).should('not.exist');
 };
 
-function exitRequirementComparisonModal () {
+const exitRequirementComparisonModal = () => {
   cy.findByRole('button', { name: /close/i, timeout: wait }).click({ force: true });
 };
 
-function openPreviewMode () {
+const openPreviewMode = () => {
   cy.findByText(/preview mode/i).click();
 };
 
-function exitPreviewMode (){
+const exitPreviewMode = () => {
   cy.findByText(/exit preview mode/i).click();
 };
 
-function createNoteFromTemplate () {
+const createNoteFromTemplate = () => {
   // cy.findByRole("button", { name: /.*(add note)|(hide).*/i }).then((el) => {
   //   if (el.text().toLowerCase().trim() === "add note") {
   //     return cy.findByText(/add note/i).click();
@@ -236,12 +236,12 @@ function createNoteFromTemplate () {
   cy.findByRole('button', { name: /^Create$/ }).click();
 };
 
-function removeNotes (){
+const removeNotes = () => {
   cy.findAllByRole('button', { name: /^delete note$/i }).first().click();
   cy.findByRole('button', { name: /^delete$/i }).click();
 };
 
-function copyApplicationDataToClipboard () {
+const copyApplicationDataToClipboard = () => {
   cy.get('[data-cy="copy-school-name"]').click();
   cy.findByText(/copied school's name to clipboard/i, { timeout: wait }).should('be.visible');
   cy.get('[data-cy="copy-program-name"]').click();
@@ -256,7 +256,7 @@ function copyApplicationDataToClipboard () {
   );
 };
 
-function deleteAnApplication () {
+const deleteAnApplication = () => {
   cy.get('.confirm', { timeout: wait }).should('not.be.visible');
   cy.findAllByRole('button', { name: /view/i, timeout: wait }).first().should('be.visible');
   cy.get('.css-77pvbq > .fa').click();
@@ -271,7 +271,7 @@ function deleteAnApplication () {
   cy.get('.css-77pvbq > .fa').should('not.exist');
 };
 
-function deleteAnyExistingApplication (studentId) {
+const deleteAnyExistingApplication = (studentId) => {
   const { baseUrl } = Cypress.config();
   cy.request(`${baseUrl}/api/v0.1/students/${studentId}/applications`).then(response => {
     for (let i = 0; i < response.body.length; i += 1) {

@@ -19,7 +19,7 @@ export interface SchoolData {
  * Fills the student modal with the provided data
  * @param schoolData of type SchoolData
  */
-function fillAttendedSchoolInformation(){
+const fillAttendedSchoolInformation = () => {
   ({
     levelOfEducation,
     countryOfInstitution,
@@ -50,13 +50,13 @@ function fillAttendedSchoolInformation(){
     cy.enterCountryOfInstitution(countryOfInstitution);
   }};
 
-function enterNameOfInstitution (nameOfInstitution) {
+const enterNameOfInstitution = (nameOfInstitution) => {
   cy.findAllByRole('textbox', { name: /name of institution/i })
     .first()
     .type(nameOfInstitution);
 };
 
-function enterLevelOfEducation(levelOfEducation){
+const enterLevelOfEducation = (levelOfEducation) => {
   cy.findByRole('button', { name: /select level of education.../i })
     .click();
   cy.findAllByRole('option', { name: levelOfEducation })
@@ -64,30 +64,30 @@ function enterLevelOfEducation(levelOfEducation){
     .click({ force: true });
 };
 
-function enterTextboxDataByName(locator, data) {
+const enterTextboxDataByName = (locator, data) => {
   cy.findByRole('textbox', { name: locator })
     .type(data);
 };
 
-function enterHasGraduated(){
+const enterHasGraduated = () => {
   cy.findAllByRole('radio', { name: /yes/i })
     .first()
     .click();
 };
 
-function enterDegreeAwarded (){
+const enterDegreeAwarded = () => {
   cy.findAllByRole('checkbox', { name: /i have the physical certificate for this degree/i })
     .first()
     .click();
 };
 
-function enterSchoolLocation(locator, location, index) {
+const enterSchoolLocation = (locator, location, index) => {
   cy.findAllByRole('textbox', { name: locator })
     .eq(index)
     .type(location);
 };
 
-function countryOfInstitution (countryOfInstitution){
+const countryOfInstitution = (countryOfInstitution) => {
   cy.findByRole('textbox', { name: /country of institution/i })
     .click()
   cy.findAllByRole('option', { name: countryOfInstitution })

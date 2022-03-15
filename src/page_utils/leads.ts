@@ -1,6 +1,6 @@
 import '@testing-library/cypress/add-commands';
 
-function dragAndDrop (dragSource, dropTarget) {
+const dragAndDrop = (dragSource, dropTarget) => {
   const BUTTON_INDEX = 0;
   const SLOPPY_CLICK_THRESHOLD = 10;
   cy.get(dropTarget)
