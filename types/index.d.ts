@@ -11,7 +11,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       // authentication.js
-      uiLogin7(username: string, password: string, path?: string, rememberMe?: Boolean): Chainable<any>;
+      uiLogin(username: string, password: string, path?: string, rememberMe?: Boolean): Chainable<any>;
       uiLogout(): Chainable<any>;
 
       // commands.js

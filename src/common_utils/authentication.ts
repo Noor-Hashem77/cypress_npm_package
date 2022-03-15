@@ -10,7 +10,7 @@ const wait = isLocal ? 15000 : 4000;
  * @param path path where login page is found. Defaults to '/'
  */
  const { baseUrl } = Cypress.config();
- const uiLogin7 = (username, password, path = '/', rememberMe = false) => {
+ const uiLogin = (username, password, path = '/', rememberMe = false) => {
   console.log('THIS IS FROM CYPRESS PACKAGE!')
   const log = Cypress.log({
     name: "uiLogin",
@@ -45,7 +45,7 @@ const uiLogout = () => {
 };
 
 const _ = {
-  uiLogin7,
+  uiLogin,
   uiLogout
 }
 
